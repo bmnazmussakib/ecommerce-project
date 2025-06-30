@@ -8,8 +8,8 @@ const BASE_URL = "http://157.230.240.97:9999/api/v1";
 export async function fetchCategories() {
   try {
     const res = await fetch(`${BASE_URL}/categories`);
-    if (!res.ok) throw new Error("Failed to fetch categories");
-    return await res.json();
+    const json = await res.json();
+    return json.data || [];
   } catch (error) {
     console.error("fetchCategories error:", error);
     return [];

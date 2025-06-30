@@ -1,21 +1,24 @@
-// src/app/layout.js
-// 'use client';
+import "./globals.css";
+import { Toaster } from "react-hot-toast";
+import Navbar from "@/components/Navbar";
+import ReduxProvider from "@/redux/ReduxProvider";
+import Footer from "@/components/Footer";
 
-import './globals.css';
-// import { Provider } from 'react-redux';
-// import { store } from '@/redux/store';
-import { Toaster } from 'react-hot-toast';
-import Navbar from '@/components/Navbar';
-import ReduxProvider from '@/redux/ReduxProvider';
+// Metadata for SEO
+export const metadata = {
+  title: "Falcon - Your Online Store",
+  description: "Shop for electronics, home appliances, and more at Falcon.",
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
-      <body >
+      <body>
         <ReduxProvider>
           <Toaster position="top-right" reverseOrder={false} />
           <Navbar />
           {children}
+          <Footer />
         </ReduxProvider>
       </body>
     </html>

@@ -54,11 +54,16 @@ const cartSlice = createSlice({
         total_stock_qty,
         merchant,
         promotion,
+        brand, // ✅ Include brand if needed
+        product_detail, // ✅ If you're passing full detail
+        ...rest // ✅ In case there are more fields you didn't list
       } = action.payload;
 
       const cartItemId = generateCartItemId(id, attributes);
 
-      const existing = state.items.find((item) => item.cartItemId === cartItemId);
+      const existing = state.items.find(
+        (item) => item.cartItemId === cartItemId
+      );
 
       if (existing) {
         existing.quantity += quantity;
@@ -77,13 +82,15 @@ const cartSlice = createSlice({
           total_stock_qty,
           merchant,
           promotion,
+          brand,
+          product_detail,
+          ...rest, // ✅ spread any remaining fields
           cartItemId,
         });
       }
 
       saveCartToLocalStorage(state.items);
     },
-
 
     updateQuantity: (state, action) => {
       const { cartItemId, quantity } = action.payload;
@@ -118,13 +125,8 @@ const cartSlice = createSlice({
   },
 });
 
-export const {
-  addToCart,
-  removeFromCart,
-  updateQuantity,
-  clearCart,
-  setCart,
-} = cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity, clearCart, setCart } =
+  cartSlice.actions;
 
 export const selectCartItems = (state) => state.cart.items;
 
