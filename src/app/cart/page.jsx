@@ -216,8 +216,14 @@ export default function CartPage() {
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <p className="mt-1 text-gray-800 text-lg font-bold text-end">
-                                                    ৳ {item.price.toFixed(2)}
+                                                <p className="mt-1 text-end">
+
+                                                    <span className="text-gray-800 text-lg font-bold ">
+                                                        ৳ {item?.price}
+                                                    </span>
+                                                    <span className="ml-2 line-through text-gray-400 text-sm">
+                                                        ৳ {item?.regular_price}
+                                                    </span>
                                                 </p>
 
 
@@ -234,9 +240,13 @@ export default function CartPage() {
                         <div className="card card-border bg-base-100 ">
                             <div className="card-body">
                                 {/* Summary & Checkout */}
-                                <div className="mt-10 border-t pt-6">
+                                <div className="">
                                     <h2 className="text-xl font-semibold mb-2">Order Summary</h2>
+                                    <div className="flex justify-between">
+
                                     <p className="mb-1">Subtotal: ৳ {totalPrice.toFixed(2)}</p>
+                                    <p className="mb-1">Subtotal: ৳ {totalPrice.toFixed(2)}</p>
+                                    </div>
                                     <p className="mb-4 text-gray-500 text-sm">
                                         *Coupon & shipping calculated at checkout
                                     </p>
