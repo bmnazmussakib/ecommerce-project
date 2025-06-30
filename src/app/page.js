@@ -20,7 +20,7 @@ export default function Home() {
   console.log('products:', products);
 
   return (
-    <div className=" min-h-screen py-8">
+    <div className=" min-h-screen py-8 bg-gray-100">
       <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         <div className="grid grid-cols-4 gap-6">
