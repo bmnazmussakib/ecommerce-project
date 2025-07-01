@@ -184,6 +184,10 @@ Ready to deploy! Push your project to GitHub and:
 - It will automatically detect the Next.js project and deploy it
 - Add your custom domain (optional)
 
+### 🔗 [Visit App](https://ecommerce-project-96fu.vercel.app/) 
+
+
+
 ### 👤 Author
 #### B M Nazmus Sakib
 ###### Frontend Developer
