@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateQuantity, removeFromCart } from "@/redux/slices/cartSlice";
 import toast from "react-hot-toast";
 import { FaRegTrashAlt } from "react-icons/fa";
+import Link from "next/link";
 
 export default function CartPage() {
   const cartItems = useSelector((state) => state.cart.items);
@@ -19,9 +20,9 @@ export default function CartPage() {
   const getCartItemKey = (item) => {
     const attr = item.attributes
       ? Object.entries(item.attributes)
-          .sort()
-          .map(([k, v]) => `${k}:${v}`)
-          .join("|")
+        .sort()
+        .map(([k, v]) => `${k}:${v}`)
+        .join("|")
       : "";
     return `${item.id}-${attr}`;
   };
@@ -132,7 +133,7 @@ export default function CartPage() {
                         type="checkbox"
                         checked={isAllSelected}
                         onChange={handleToggleSelectAll}
-                        className="cursor-pointer"
+                        className="cursor-pointer checkbox checked:border-[#00A788] checked:bg-[#00A788] checked:text-white"
                       />
                       <button
                         onClick={handleToggleSelectAll}
@@ -171,7 +172,7 @@ export default function CartPage() {
                             type="checkbox"
                             checked={brandSelected}
                             onChange={() => handleSelectBrand(brand)}
-                            className="mr-2 cursor-pointer w-5 h-5 border-neutral-700"
+                            className="mr-2 cursor-pointer checkbox-md checkbox checked:border-[#00A788] checked:bg-[#00A788] checked:text-white"
                           />
                           <svg
                             width="20"
@@ -212,13 +213,12 @@ export default function CartPage() {
                             return (
                               <div
                                 key={key}
-                                className={`flex items-top border-0 rounded-md p-4 ${
-                                  selected ? "bg-gray-50" : ""
-                                }`}
+                                className={`flex items-top border-0 rounded-md p-4 ${selected ? "bg-gray-50" : ""
+                                  }`}
                               >
                                 <input
                                   type="checkbox"
-                                  className="mr-3 cursor-pointer w-4 h-4"
+                                  className="mr-3 cursor-pointer checkbox checkbox-sm checked:border-[#00A788] checked:bg-[#00A788] checked:text-white"
                                   checked={selected}
                                   onChange={() => handleSelect(item)}
                                 />
@@ -359,7 +359,7 @@ export default function CartPage() {
                     <input
                       type="checkbox"
                       id="terms"
-                      className="mr-2"
+                      className="mr-2 checkbox checked:border-[#00A788] checked:bg-[#00A788] checked:text-white"
                       checked={agreed}
                       onChange={(e) => setAgreed(e.target.checked)}
                     />
@@ -369,17 +369,16 @@ export default function CartPage() {
                     </label>
                   </div>
 
-                  <button
+                  <Link
+                    href="/thankyou"
                     disabled={selectedItems.length === 0 || !agreed}
-                    onClick={() => toast("Checkout feature coming soon!")}
-                    className={`px-6 py-2 rounded text-white w-full ${
-                      selectedItems.length === 0 || !agreed
+                    className={`btn border-0 px-6 py-2 rounded text-white w-full ${selectedItems.length === 0 || !agreed
                         ? "bg-gray-400 cursor-not-allowed"
                         : "bg-[#00A788] hover:bg-[#00A788]"
-                    }`}
+                      }`}
                   >
                     Proceed to Checkout
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

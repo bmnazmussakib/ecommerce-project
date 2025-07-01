@@ -6,13 +6,20 @@ import { useDispatch } from "react-redux";
 import { fetchProductBySlug } from "@/lib/api";
 import { addToCart } from "@/redux/slices/cartSlice";
 import toast from "react-hot-toast";
-import Link from "next/link";
 import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css"; // Import default styles
+import "react-image-gallery/styles/css/image-gallery.css";
 import StarRatings from "react-star-ratings";
+
 import BreadCrumbs from "@/components/BreadCrumbs";
-import parse from "html-react-parser";
 import DescriptionToggle from "@/components/DescriptionToggle";
+
+// Skeletons
+import ProductSliderSkeleton from "@/components/skeleton/ProductSliderSkeleton";
+import ProductInfoSkeleton from "@/components/skeleton/ProductInfoSkeleton";
+import DeliverySkeleton from "@/components/skeleton/DeliverySkeleton";
+import DescriptionSkeleton from "@/components/skeleton/DescriptionSkeleton";
+import SpecificationSkeleton from "@/components/skeleton/SpecificationSkeleton";
+import SpecificationToggle from "@/components/SpecificationToggle";
 
 export default function ProductDetailsPage() {
   const { slug } = useParams();
@@ -33,8 +40,6 @@ export default function ProductDetailsPage() {
     };
     getProduct();
   }, [slug]);
-
-  console.log("Product Details:", product);
 
   const attributeOptions = {};
   product?.variations?.forEach((variation) => {
@@ -57,28 +62,22 @@ export default function ProductDetailsPage() {
 
   const handleAddToCart = () => {
     const cartItem = {
-      ...product, // includes all product fields
+      ...product,
       quantity,
       price: Number(product.product_detail?.discount_price),
       regular_price: Number(product.product_detail?.regular_price),
-      promotion: "Min. spend ৳ 500", // optional UI-based
+      promotion: "Min. spend ৳ 500",
       ...(product.is_variant && { attributes: selectedAttributes }),
-
-      // ✅ Include brand info explicitly
       brand: {
         id: product.brand?.id || null,
         name: product.brand?.name || "Unknown",
         slug: product.brand?.slug || "",
       },
-
-      // ✅ Sanitize/standardize merchant info
       merchant: {
         ...product.merchant,
         shop_name: product.merchant?.shop_name || "Unknown",
       },
     };
-
-    console.log("added to cart!: ", cartItem);
 
     dispatch(addToCart(cartItem));
     toast.success(`${product.name} added to cart!`);
@@ -92,17 +91,45 @@ export default function ProductDetailsPage() {
   const canAddToCart =
     product && (!product.is_variant || isAllVariantsSelected);
 
-  if (!product) return <div className="p-10 text-center">Loading...</div>;
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-gray-100">
+        <div className="bg-white">
+          <div className="max-w-screen-2xl mx-auto px-4 py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-1">
+                <ProductSliderSkeleton />
+              </div>
+              <div className="lg:col-span-1">
+                <ProductInfoSkeleton />
+              </div>
+              <div className="lg:col-span-1 flex flex-col gap-4">
+                <DeliverySkeleton/>
+                <DeliverySkeleton />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-screen-2xl mx-auto px-4 py-8">
+          <DescriptionSkeleton />
+          <SpecificationSkeleton />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
-      <BreadCrumbs data={product}/>
+      <BreadCrumbs data={product} />
+
       <div className="min-h-screen bg-gray-100">
-        <div className=" bg-white">
-          <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 ">
+        <div className="bg-white">
+          <div className="max-w-screen-2xl mx-auto px-4 py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Image Gallery */}
               <div className="lg:col-span-1">
-                <div className="max-w-md aspect-square ">
+                <div className="max-w-md aspect-square">
                   <ImageGallery
                     items={[
                       {
@@ -127,21 +154,16 @@ export default function ProductDetailsPage() {
 
               {/* Product Info */}
               <div className="lg:col-span-1 space-y-4">
-                <h1 className="font-sans text-xl font-semibold text-neutral-900">
-                  {product.name}
-                </h1>
+                <h1 className="text-xl font-semibold text-neutral-900">{product.name}</h1>
 
                 <div className="flex justify-between">
-                  {/* Star Ratings */}
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-600 ">
-                      {product.rating ? product.rating.toFixed(1) : "0.0"}
-                      {product.total_reviews
-                        ? ` (${product.total_reviews} reviews)`
-                        : ""}
+                    <span className="text-sm text-gray-600">
+                      {product.rating?.toFixed(1) || "0.0"}{" "}
+                      {product.total_reviews ? `(${product.total_reviews} reviews)` : ""}
                     </span>
                     <StarRatings
-                      rating={Number(product.rating) || 0} // assuming product.rating is a number like 4.5
+                      rating={Number(product.rating) || 0}
                       starRatedColor="#00A788"
                       numberOfStars={5}
                       starDimension="20px"
@@ -149,58 +171,8 @@ export default function ProductDetailsPage() {
                       name="rating"
                     />
                   </div>
-
-                  <div className="flex">
-                    <button className="btn btn-ghost btn-sm px-2 hover:bg-transparent border-0">
-                      <svg
-                        width="28"
-                        height="26"
-                        viewBox="0 0 28 26"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M23.3282 2.99269C19.9761 0.936536 17.0505 1.76514 15.2929 3.08502C14.5723 3.6262 14.212 3.89679 14 3.89679C13.788 3.89679 13.4277 3.6262 12.7071 3.08502L12.7071 3.08502C10.9495 1.76514 8.02386 0.936536 4.6718 2.99269C0.272586 5.69117 -0.722849 14.5936 9.42441 22.1042C11.3571 23.5347 12.3235 24.25 14 24.25C15.6765 24.25 16.6429 23.5347 18.5756 22.1042C28.7228 14.5936 27.7274 5.69117 23.3282 2.99269Z"
-                          stroke="#64748B"
-                          stroke-width="1.8"
-                          stroke-linecap="round"
-                        />
-                      </svg>
-                    </button>
-                    <button className="btn btn-ghost btn-sm px-0 hover:bg-transparent border-0">
-                      <svg
-                        width="48"
-                        height="48"
-                        viewBox="0 0 48 48"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M35.25 17.125C35.25 19.1961 33.5711 20.875 31.5 20.875C29.4289 20.875 27.75 19.1961 27.75 17.125C27.75 15.0539 29.4289 13.375 31.5 13.375C33.5711 13.375 35.25 15.0539 35.25 17.125Z"
-                          stroke="#64748B"
-                          stroke-width="1.8"
-                        />
-                        <path
-                          d="M20.25 24C20.25 26.0711 18.5711 27.75 16.5 27.75C14.4289 27.75 12.75 26.0711 12.75 24C12.75 21.9289 14.4289 20.25 16.5 20.25C18.5711 20.25 20.25 21.9289 20.25 24Z"
-                          stroke="#64748B"
-                          stroke-width="1.8"
-                        />
-                        <path
-                          d="M35.25 30.875C35.25 32.9461 33.5711 34.625 31.5 34.625C29.4289 34.625 27.75 32.9461 27.75 30.875C27.75 28.8039 29.4289 27.125 31.5 27.125C33.5711 27.125 35.25 28.8039 35.25 30.875Z"
-                          stroke="#64748B"
-                          stroke-width="1.8"
-                        />
-                        <path
-                          d="M19.9106 22.4372L28.0356 18.6879M19.9106 25.5629L28.0356 29.3122"
-                          stroke="#64748B"
-                          stroke-width="1.8"
-                        />
-                      </svg>
-                    </button>
-                  </div>
                 </div>
 
-                {/* Price */}
                 <div className="text-xl text-[#00A788] flex items-center">
                   <span className="font-semibold mr-2">
                     ৳ {product.product_detail?.discount_price}
@@ -210,60 +182,16 @@ export default function ProductDetailsPage() {
                   </span>
                 </div>
 
-                {/* Promotion */}
-                <div className="flex items-center gap-2">
-                  <p className="mb-0 font-medium text-neutral-600 text-sm capitalize leading-0">
-                    promotion
-                  </p>
-
-                  <div className=" text-sm font-semibold flex ">
-                    <div className="relative inline-block">
-                      <svg
-                        width="154"
-                        height="25"
-                        viewBox="0 0 154 25"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M154 0L0 0L0 25L154 25L143.043 12.7119L154 0Z"
-                          fill="url(#paint0_linear_1_786)"
-                        />
-                        <defs>
-                          <linearGradient
-                            id="paint0_linear_1_786"
-                            x1="17.0435"
-                            y1="12.7119"
-                            x2="172.87"
-                            y2="12.7119"
-                            gradientUnits="userSpaceOnUse"
-                          >
-                            <stop stop-color="#FF8810" />
-                            <stop offset="1" stop-color="#D23707" />
-                          </linearGradient>
-                        </defs>
-                      </svg>
-                      <span className="absolute top-1/2 left-3 transform -translate-y-1/2 w-full text-gray-100">
-                        Min. spend ৳ 500
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Variants */}
+                {/* Variant Options */}
                 {product.is_variant &&
                   Object.entries(attributeOptions).map(([attrName, values]) => (
                     <div key={attrName}>
-                      <p className="text-sm font-medium text-gray-700 mb-1">
-                        {attrName}:
-                      </p>
+                      <p className="text-sm font-medium text-gray-700 mb-1">{attrName}:</p>
                       <div className="flex flex-wrap gap-2 mb-3">
                         {[...values].map((value) => (
                           <button
                             key={value}
-                            onClick={() =>
-                              handleAttributeSelect(attrName, value)
-                            }
+                            onClick={() => handleAttributeSelect(attrName, value)}
                             className={`px-3 py-1 rounded-md border text-sm hover:border-[#00A788] cursor-pointer ${
                               selectedAttributes[attrName] === value
                                 ? "bg-[#00A788] text-white"
@@ -277,22 +205,20 @@ export default function ProductDetailsPage() {
                     </div>
                   ))}
 
-                {/* Quantity */}
+                {/* Quantity Control */}
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-medium text-gray-700">
-                    Quantity:
-                  </span>
+                  <span className="text-sm font-medium text-gray-700">Quantity:</span>
                   <div className="border border-gray-300 rounded-full flex items-center justify-between gap-2 w-32 p-0.5">
                     <button
                       onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                      className="px-3 py-1 bg-neutral-100 text-neutral-500 font-bold rounded-full cursor-pointer"
+                      className="px-3 py-1 bg-neutral-100 text-neutral-500 font-bold rounded-full"
                     >
                       −
                     </button>
                     <span>{quantity}</span>
                     <button
                       onClick={() => setQuantity((q) => q + 1)}
-                      className="px-3 py-1 bg-neutral-100 text-neutral-500 font-bold rounded-full cursor-pointer"
+                      className="px-3 py-1 bg-neutral-100 text-neutral-500 font-bold rounded-full"
                     >
                       +
                     </button>
@@ -301,7 +227,7 @@ export default function ProductDetailsPage() {
 
                 <button
                   onClick={handleAddToCart}
-                  className={`lg:w-100 w-full mt-4 px-4 py-2 font-medium rounded-md transition duration-200 cursor-pointer ${
+                  className={`lg:w-100 w-full mt-4 px-4 py-2 font-medium rounded-md transition duration-200 ${
                     canAddToCart
                       ? "bg-[#00A788] text-white hover:bg-[#00A788]"
                       : "bg-gray-300 text-gray-600 cursor-not-allowed"
@@ -323,42 +249,7 @@ export default function ProductDetailsPage() {
                       <li>
                         <div className="flex align-top gap-2">
                           <div className="icon">
-                            <svg
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M12 22.0001C11.1818 22.0001 10.4002 21.6699 8.83693 21.0096C4.94564 19.3658 3 18.5439 3 17.1614C3 16.7743 3 10.0646 3 7.00012M12 22.0001C12.8182 22.0001 13.5998 21.6699 15.1631 21.0096C19.0544 19.3658 21 18.5439 21 17.1614V7.00012M12 22.0001V11.3549"
-                                stroke="#00B795"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                              <path
-                                d="M8.32592 9.69126L5.40472 8.27773C3.80157 7.50198 3 7.11411 3 6.49988C3 5.88565 3.80157 5.49778 5.40472 4.72203L8.32592 3.3085C10.1288 2.43609 11.0303 1.99988 12 1.99988C12.9697 1.99988 13.8712 2.43608 15.6741 3.3085L18.5953 4.72203C20.1984 5.49778 21 5.88565 21 6.49988C21 7.11411 20.1984 7.50198 18.5953 8.27773L15.6741 9.69126C13.8712 10.5637 12.9697 10.9999 12 10.9999C11.0303 10.9999 10.1288 10.5637 8.32592 9.69126Z"
-                                stroke="#00B795"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                              <path
-                                d="M6 12L8 13"
-                                stroke="#00B795"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                              <path
-                                d="M17.002 4.00012L7.00195 9.00012"
-                                stroke="#00B795"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                            </svg>
+                            <img src="/images/regular-delivery.svg" alt="" />
                           </div>
                           <div className="content">
                             <h5 className="text-lg font-medium leading-none mb-2">
@@ -371,49 +262,7 @@ export default function ProductDetailsPage() {
                       <li>
                         <div className="flex align-top gap-2">
                           <div className="icon text-neutral-300">
-                            <svg
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M12.998 21.9999C12.1798 21.9999 11.3982 21.6587 9.83496 20.9763C8.01038 20.1799 6.61359 19.5702 5.64453 18.9999H1.99805M12.998 21.9999C13.8162 21.9999 14.5978 21.6587 16.1611 20.9763C20.0524 19.2778 21.998 18.4285 21.998 16.9999V6.49988M12.998 21.9999V10.9999M3.99805 6.49988V9.49988"
-                                stroke="#CBD5E1"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                              <path
-                                d="M9.32787 9.69126L6.40667 8.27773C4.80352 7.50198 4.00195 7.11411 4.00195 6.49988C4.00195 5.88565 4.80352 5.49778 6.40667 4.72203L9.32787 3.3085C11.1308 2.43609 12.0323 1.99988 13.002 1.99988C13.9717 1.99988 14.8732 2.43608 16.6761 3.3085L19.5973 4.72203C21.2004 5.49778 22.002 5.88565 22.002 6.49988C22.002 7.11411 21.2004 7.50198 19.5973 8.27773L16.6761 9.69126C14.8732 10.5637 13.9717 10.9999 13.002 10.9999C12.0323 10.9999 11.1308 10.5637 9.32787 9.69126Z"
-                                stroke="#CBD5E1"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                              <path
-                                d="M18.1386 4.0155L7.86914 8.98472"
-                                stroke="#CBD5E1"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                              <path
-                                d="M1.99805 13.0001H4.99805"
-                                stroke="#CBD5E1"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                              <path
-                                d="M1.99805 16.0001H4.99805"
-                                stroke="#CBD5E1"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                            </svg>
+                            <img src="/images/express-delivery.svg" alt="" />
                           </div>
                           <div className="content">
                             <div className="flex align-center gap-2 mb-2">
@@ -497,33 +346,11 @@ export default function ProductDetailsPage() {
             </div>
           </div>
         </div>
-        <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* <div className="card bg-base-100 card-md shadow-sm w-3/4 mb-5">
-            <div className="card-body">
-              <h3 className="text-xl font-semibold mb-3">Description</h3>
-              <p className="text-gray-700 text-sm">
-                {parse(product.description) || "No description available."}
-              </p>
-            </div>
-          </div> */}
-          <DescriptionToggle data={product.description}/>
-          <div className="card bg-base-100 card-md shadow-sm w-3/4">
-            <div className="card-body">
-              <h3 className="text-xl font-semibold mb-3">Specification</h3>
-              <h3 className="text-lg font-medium mb-3">{product.name}</h3>
-              <ul className="list-disc list-inside text-gray-700 text-sm space-y-1">
-                <li>SKU: {product.sku}</li>
-                <li>Barcode: {product.barcode}</li>
-                <li>Stock: {product.total_stock_qty}</li>
-                <li>
-                  Regular Price: ৳ {product.product_detail?.regular_price}
-                </li>
-                <li>
-                  Discount Price: ৳ {product.product_detail?.discount_price}
-                </li>
-              </ul>
-            </div>
-          </div>
+
+        {/* Description & Specs */}
+        <div className="max-w-screen-2xl mx-auto px-4 py-8">
+          <DescriptionToggle data={product.description} />
+          <SpecificationToggle data={product}/>
         </div>
       </div>
     </>

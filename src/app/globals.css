@@ -5,3 +5,23 @@
 body {
     font-family: "Onest", sans-serif;
 }
+
+.parsed-text {
+  font-family: 'Onest', sans-serif !important;
+}
+.parsed-text * {
+  font-family: 'Onest', sans-serif !important;
+}
+/* .parse-description{
+    color: #76ec07 !important;
+} */
+
+.parsed-description {
+  color: #475569; /* text-slate-600 */
+  font-family: 'Onest', sans-serif !important;
+}
+
+.parsed-description * {
+  color: #475569 !important;
+  font-family: 'Onest', sans-serif !important;
+}
