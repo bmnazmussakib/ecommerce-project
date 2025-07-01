@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React from "react";
 
-const ProductCard = ({product}) => {
+const ProductCard = ({ product }) => {
   return (
     <>
       <div className="card bg-base-100 shadow-sm h-full" key={product.id}>
@@ -10,7 +10,9 @@ const ProductCard = ({product}) => {
           <img src={product.thumbnail} alt="Shoes" />
         </figure>
         <div className="card-body text-center">
-          <h2 className="card-title text-sm text-[#00A788]">{product.name}</h2>
+          <div className="tooltip" data-tip={product.name}>
+          <h2 className="card-title text-sm text-[#00A788] truncate" >{product.name}</h2>
+          </div>
           <div className="flex justify-center gap-2">
             <h4 className="text-sm text-neutral-800 font-semibold">
               ৳{product?.discount_price}

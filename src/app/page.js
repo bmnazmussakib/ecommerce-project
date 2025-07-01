@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <div className="min-h-screen py-8 bg-gray-100">
       <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
+        <div className="grid xl:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
           {loading
             ? Array.from({ length: 8 }).map((_, idx) => (
                 <ProductCardSkeleton key={idx} />

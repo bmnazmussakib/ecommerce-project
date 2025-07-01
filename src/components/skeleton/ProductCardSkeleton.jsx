@@ -9,7 +9,7 @@ const ProductCardSkeleton = () => {
         <div className="card bg-base-100 shadow-sm h-full">
             <div className="card-body text-center">
                 {/* <Lottie className="w-full h-full" animationData={ImagePlaceholder} loop={true} /> */}
-                <Skeleton height={300} width="100%" />
+                <Skeleton height={250} width="100%" />
                 <div className='mt-5'>
                     <Skeleton width="100%" height={20} />
                 </div>
