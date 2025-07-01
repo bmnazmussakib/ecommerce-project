@@ -220,6 +220,10 @@ export default function CartPage() {
                             const selected = isItemSelected(item);
                             const key = getCartItemKey(item);
 
+                            console.log("Raw image URL from API:", item.thumbnail);
+                            console.log("Fixed image URL:", fixImageUrl(item.thumbnail));
+
+
                             return (
                               <div
                                 key={key}
