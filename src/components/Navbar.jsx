@@ -108,7 +108,7 @@ export default function Navbar() {
           <div className="flex space-x-6 text-sm font-medium">
             <a
               href="#"
-              className="text-neutral-500 hover:text-[#00B795] flex items lopen-center text-md space-x-1"
+              className="text-neutral-500 hover:text-[#00B795] flex items-center lopen-center text-md space-x-1"
             >
               <span>
                 <BsBoxSeam />
