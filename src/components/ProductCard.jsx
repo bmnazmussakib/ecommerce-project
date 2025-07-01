@@ -1,4 +1,5 @@
 'use client'
+import { fixImageUrl } from "@/utils/helpers";
 import Link from "next/link";
 import React from "react";
 
@@ -7,7 +8,7 @@ const ProductCard = ({ product }) => {
     <>
       <div className="card bg-base-100 shadow-sm h-full" key={product.id}>
         <figure className="aspect-square object-fit-cover">
-          <img src={product.thumbnail} alt="Shoes" />
+          <img src={fixImageUrl(product.thumbnail)} alt="Shoes" />
         </figure>
         <div className="card-body text-center">
           <div className="tooltip" data-tip={product.name}>

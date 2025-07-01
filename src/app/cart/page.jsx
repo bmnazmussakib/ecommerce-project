@@ -10,6 +10,7 @@ import {
 import toast from "react-hot-toast";
 import { FaRegTrashAlt } from "react-icons/fa";
 import Link from "next/link";
+import { fixImageUrl } from "@/utils/helpers";
 
 export default function CartPage() {
   const cartItems = useSelector((state) => state.cart.items);
@@ -234,7 +235,7 @@ export default function CartPage() {
                                 />
 
                                 <img
-                                  src={item.thumbnail}
+                                  src={fixImageUrl(item.thumbnail)}
                                   alt={item.name}
                                   className="w-20 h-20 object-cover rounded"
                                 />

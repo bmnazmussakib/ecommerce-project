@@ -20,6 +20,7 @@ import DeliverySkeleton from "@/components/skeleton/DeliverySkeleton";
 import DescriptionSkeleton from "@/components/skeleton/DescriptionSkeleton";
 import SpecificationSkeleton from "@/components/skeleton/SpecificationSkeleton";
 import SpecificationToggle from "@/components/SpecificationToggle";
+import { fixImageUrl } from "@/utils/helpers";
 
 export default function ProductDetailsPage() {
   const { slug } = useParams();
@@ -133,8 +134,8 @@ export default function ProductDetailsPage() {
                   <ImageGallery
                     items={[
                       {
-                        original: product.thumbnail,
-                        thumbnail: product.thumbnail,
+                        original: fixImageUrl(product.thumbnail),
+                        thumbnail: fixImageUrl(product.thumbnail),
                       },
                       ...(product.variations
                         ?.filter((v) => v.image)
