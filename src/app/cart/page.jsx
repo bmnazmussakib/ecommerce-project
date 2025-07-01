@@ -2,7 +2,11 @@
 
 import React, { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateQuantity, removeFromCart } from "@/redux/slices/cartSlice";
+import {
+  updateQuantity,
+  removeFromCart,
+  clearCart,
+} from "@/redux/slices/cartSlice";
 import toast from "react-hot-toast";
 import { FaRegTrashAlt } from "react-icons/fa";
 import Link from "next/link";
@@ -20,9 +24,9 @@ export default function CartPage() {
   const getCartItemKey = (item) => {
     const attr = item.attributes
       ? Object.entries(item.attributes)
-        .sort()
-        .map(([k, v]) => `${k}:${v}`)
-        .join("|")
+          .sort()
+          .map(([k, v]) => `${k}:${v}`)
+          .join("|")
       : "";
     return `${item.id}-${attr}`;
   };
@@ -91,6 +95,11 @@ export default function CartPage() {
     );
     setSelectedItems((prev) => prev.filter((k) => k !== getCartItemKey(item)));
     toast.success("Item removed from cart");
+  };
+
+  const handleClearCart = () => {
+    dispatch(clearCart());
+    toast.success("Cart is emply");
   };
 
   // Update quantity of an item
@@ -213,8 +222,9 @@ export default function CartPage() {
                             return (
                               <div
                                 key={key}
-                                className={`flex items-top border-0 rounded-md p-4 ${selected ? "bg-gray-50" : ""
-                                  }`}
+                                className={`flex items-top border-0 rounded-md p-4 ${
+                                  selected ? "bg-gray-50" : ""
+                                }`}
                               >
                                 <input
                                   type="checkbox"
@@ -372,10 +382,12 @@ export default function CartPage() {
                   <Link
                     href="/thankyou"
                     disabled={selectedItems.length === 0 || !agreed}
-                    className={`btn border-0 px-6 py-2 rounded text-white w-full ${selectedItems.length === 0 || !agreed
+                    className={`btn border-0 px-6 py-2 rounded text-white w-full ${
+                      selectedItems.length === 0 || !agreed
                         ? "bg-gray-400 cursor-not-allowed"
                         : "bg-[#00A788] hover:bg-[#00A788]"
-                      }`}
+                    }`}
+                    onClick={() => handleClearCart()}
                   >
                     Proceed to Checkout
                   </Link>
