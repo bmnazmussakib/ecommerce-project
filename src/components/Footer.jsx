@@ -225,22 +225,31 @@ const Footer = () => {
                 </p>
                 <ul className="space-y-3 text-gray-300 text-sm">
                   <li className="flex items-start">
-                    <div className="icon mr-2 h-8 w-8 bg-white rounded-full text-neutral-900 flex justify-center items-center">
+                    {/* <div className="icon mr-2 h-8 w-8 bg-white rounded-full text-neutral-900 flex justify-center items-center">
                       <FaLocationDot />
+                    </div> */}
+                    <div className="mr-2">
+                      <img src="/images/location.svg" alt="" />
                     </div>
                     <span>
                       House #64, Road 13, ASA Center, Uttara, Dhaka-1402
                     </span>
                   </li>
                   <li className="flex items-center">
-                    <div className="icon mr-2 h-8 w-8 bg-white rounded-full text-neutral-900 flex justify-center items-center">
+                    {/* <div className="icon mr-2 h-8 w-8 bg-white rounded-full text-neutral-900 flex justify-center items-center">
                       <FaLocationDot />
+                    </div> */}
+                    <div className="mr-2">
+                      <img src="/images/phone.svg" alt="" />
                     </div>
                     <span>01729-1497201</span>
                   </li>
                   <li className="flex items-center">
-                    <div className="icon mr-2 h-8 w-8 bg-white rounded-full text-neutral-900 flex justify-center items-center">
+                    {/* <div className="icon mr-2 h-8 w-8 bg-white rounded-full text-neutral-900 flex justify-center items-center">
                       <FaLocationDot />
+                    </div> */}
+                    <div className="mr-2">
+                      <img src="/images/email.svg" alt="" />
                     </div>
                     <span>falcon@gmail.com</span>
                   </li>
