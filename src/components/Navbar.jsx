@@ -52,7 +52,7 @@ export default function Navbar() {
         <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <FalconLogo />
+            <img src="/images/logo.png" alt="" className="max-w-[100px]"/>
             <span className="text-xl font-bold">FALCON</span>
           </Link>
 

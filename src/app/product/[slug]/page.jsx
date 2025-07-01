@@ -152,7 +152,7 @@ export default function ProductDetailsPage() {
 
                   <div className="flex">
                     <button className="btn btn-ghost btn-sm px-2 hover:bg-transparent border-0">
-                      {/* <svg
+                      <svg
                         width="28"
                         height="26"
                         viewBox="0 0 28 26"
@@ -165,10 +165,10 @@ export default function ProductDetailsPage() {
                           stroke-width="1.8"
                           stroke-linecap="round"
                         />
-                      </svg> */}
+                      </svg>
                     </button>
                     <button className="btn btn-ghost btn-sm px-0 hover:bg-transparent border-0">
-                      {/* <svg
+                      <svg
                         width="48"
                         height="48"
                         viewBox="0 0 48 48"
@@ -195,7 +195,7 @@ export default function ProductDetailsPage() {
                           stroke="#64748B"
                           stroke-width="1.8"
                         />
-                      </svg> */}
+                      </svg>
                     </button>
                   </div>
                 </div>
@@ -218,7 +218,7 @@ export default function ProductDetailsPage() {
 
                   <div className=" text-sm font-semibold flex ">
                     <div className="relative inline-block">
-                      {/* <svg
+                      <svg
                         width="154"
                         height="25"
                         viewBox="0 0 154 25"
@@ -242,7 +242,7 @@ export default function ProductDetailsPage() {
                             <stop offset="1" stop-color="#D23707" />
                           </linearGradient>
                         </defs>
-                      </svg> */}
+                      </svg>
                       <span className="absolute top-1/2 left-3 transform -translate-y-1/2 w-full text-gray-100">
                         Min. spend ৳ 500
                       </span>
@@ -323,7 +323,7 @@ export default function ProductDetailsPage() {
                       <li>
                         <div className="flex align-top gap-2">
                           <div className="icon">
-                            {/* <svg
+                            <svg
                               width="24"
                               height="24"
                               viewBox="0 0 24 24"
@@ -358,7 +358,7 @@ export default function ProductDetailsPage() {
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                               />
-                            </svg> */}
+                            </svg>
                           </div>
                           <div className="content">
                             <h5 className="text-lg font-medium leading-none mb-2">
@@ -371,7 +371,7 @@ export default function ProductDetailsPage() {
                       <li>
                         <div className="flex align-top gap-2">
                           <div className="icon text-neutral-300">
-                            {/* <svg
+                            <svg
                               width="24"
                               height="24"
                               viewBox="0 0 24 24"
@@ -413,7 +413,7 @@ export default function ProductDetailsPage() {
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                               />
-                            </svg> */}
+                            </svg>
                           </div>
                           <div className="content">
                             <div className="flex align-center gap-2 mb-2">
@@ -445,7 +445,7 @@ export default function ProductDetailsPage() {
                         <p className="text-gray-800 font-medium">
                           <span className="flex items-center gap-1">
                             {product.merchant?.shop_name || "Unknown"}
-                            {/* <svg
+                            <svg
                               width="20"
                               height="20"
                               viewBox="0 0 20 20"
@@ -456,7 +456,7 @@ export default function ProductDetailsPage() {
                                 d="M17.9658 8.94894L16.8325 7.63226C16.6158 7.38226 16.4408 6.9156 16.4408 6.58226V5.1656C16.4408 4.28226 15.7158 3.55726 14.8325 3.55726H13.4158C13.0908 3.55726 12.6158 3.38226 12.3658 3.1656L11.0491 2.03226C10.4741 1.5406 9.53246 1.5406 8.94912 2.03226L7.64076 3.17393C7.39076 3.38226 6.91576 3.55726 6.59076 3.55726H5.14909C4.26576 3.55726 3.54076 4.28226 3.54076 5.1656V6.5906C3.54076 6.9156 3.36576 7.38226 3.15742 7.63226L2.03242 8.95727C1.54909 9.53227 1.54909 10.4656 2.03242 11.0406L3.15742 12.3656C3.36576 12.6156 3.54076 13.0823 3.54076 13.4073V14.8323C3.54076 15.7156 4.26576 16.4406 5.14909 16.4406H6.59076C6.91576 16.4406 7.39076 16.6156 7.64076 16.8323L8.95746 17.9656C9.53246 18.4573 10.4741 18.4573 11.0575 17.9656L12.3741 16.8323C12.6241 16.6156 13.0908 16.4406 13.4241 16.4406H14.8408C15.7241 16.4406 16.4491 15.7156 16.4491 14.8323V13.4156C16.4491 13.0906 16.6241 12.6156 16.8408 12.3656L17.9741 11.0489C18.4575 10.4739 18.4575 9.52394 17.9658 8.94894ZM13.4658 8.42394L9.44079 12.4489C9.32412 12.5656 9.16579 12.6323 8.99912 12.6323C8.83246 12.6323 8.67412 12.5656 8.55746 12.4489L6.54076 10.4323C6.29909 10.1906 6.29909 9.79061 6.54076 9.54894C6.78242 9.30727 7.18242 9.30727 7.42409 9.54894L8.99912 11.1239L12.5825 7.5406C12.8241 7.29893 13.2241 7.29893 13.4658 7.5406C13.7075 7.78226 13.7075 8.18226 13.4658 8.42394Z"
                                 fill="#3B82F6"
                               />
-                            </svg> */}
+                            </svg>
                           </span>
                         </p>
                         <img src="/images/risign-star.png" alt="" />
