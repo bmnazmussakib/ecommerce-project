@@ -1,11 +1,9 @@
-// src/lib/api.js
+
 
 // const BASE_URL = "http://157.230.240.97:9999/api/v1";
 const BASE_URL = "/api/proxy";
 
-/**
- * Fetch all categories
- */
+
 export async function fetchCategories() {
   try {
     const res = await fetch(`${BASE_URL}/categories`);
@@ -17,10 +15,6 @@ export async function fetchCategories() {
   }
 }
 
-/**
- * Fetch all products
- */
-// lib/api.js
 
 export async function fetchProducts() {
   try {
@@ -33,10 +27,7 @@ export async function fetchProducts() {
   }
 }
 
-/**
- * Fetch a single product by slug
- * @param {string} slug - The product slug
- */
+
 export async function fetchProductBySlug(slug) {
   try {
     const res = await fetch(`${BASE_URL}/product/${slug}`);
@@ -49,11 +40,7 @@ export async function fetchProductBySlug(slug) {
   }
 }
 
-/**
- * Fetch related products by category slug (optional)
- * You must filter locally or have an endpoint if supported.
- * @param {string} categorySlug
- */
+
 export async function fetchRelatedProducts(categorySlug) {
   try {
     const res = await fetch(`${BASE_URL}/shop/products`);
