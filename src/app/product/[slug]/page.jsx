@@ -105,7 +105,7 @@ export default function ProductDetailsPage() {
                 <ProductInfoSkeleton />
               </div>
               <div className="lg:col-span-1 flex flex-col gap-4">
-                <DeliverySkeleton/>
+                <DeliverySkeleton />
                 <DeliverySkeleton />
               </div>
             </div>
@@ -128,20 +128,19 @@ export default function ProductDetailsPage() {
         <div className="bg-white">
           <div className="max-w-screen-2xl mx-auto px-4 py-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              
               <div className="lg:col-span-1">
                 <div className="max-w-md aspect-square">
                   <ImageGallery
                     items={[
                       {
-                        original: fixImageUrl(product.thumbnail),
-                        thumbnail: fixImageUrl(product.thumbnail),
+                        original: fixImageUrl(product.thumbnail) || "",
+                        thumbnail: fixImageUrl(product.thumbnail) || "",
                       },
                       ...(product.variations
-                        ?.filter((v) => v.image)
+                        ?.filter((v) => v.image && typeof v.image === "string")
                         .map((v) => ({
-                          original: v.image,
-                          thumbnail: v.image,
+                          original: fixImageUrl(v.image) || "",
+                          thumbnail: fixImageUrl(v.image) || "",
                         })) || []),
                     ]}
                     showPlayButton={false}
@@ -153,15 +152,18 @@ export default function ProductDetailsPage() {
                 </div>
               </div>
 
-              
               <div className="lg:col-span-1 space-y-4">
-                <h1 className="text-xl font-semibold text-neutral-900">{product.name}</h1>
+                <h1 className="text-xl font-semibold text-neutral-900">
+                  {product.name}
+                </h1>
 
                 <div className="flex justify-between">
                   <div className="flex items-center gap-2">
                     <span className="text-sm text-gray-600">
                       {product.rating?.toFixed(1) || "0.0"}{" "}
-                      {product.total_reviews ? `(${product.total_reviews} reviews)` : ""}
+                      {product.total_reviews
+                        ? `(${product.total_reviews} reviews)`
+                        : ""}
                     </span>
                     <StarRatings
                       rating={Number(product.rating) || 0}
@@ -183,16 +185,19 @@ export default function ProductDetailsPage() {
                   </span>
                 </div>
 
-                
                 {product.is_variant &&
                   Object.entries(attributeOptions).map(([attrName, values]) => (
                     <div key={attrName}>
-                      <p className="text-sm font-medium text-gray-700 mb-1">{attrName}:</p>
+                      <p className="text-sm font-medium text-gray-700 mb-1">
+                        {attrName}:
+                      </p>
                       <div className="flex flex-wrap gap-2 mb-3">
                         {[...values].map((value) => (
                           <button
                             key={value}
-                            onClick={() => handleAttributeSelect(attrName, value)}
+                            onClick={() =>
+                              handleAttributeSelect(attrName, value)
+                            }
                             className={`px-3 py-1 rounded-md border text-sm hover:border-[#00A788] cursor-pointer ${
                               selectedAttributes[attrName] === value
                                 ? "bg-[#00A788] text-white"
@@ -206,9 +211,10 @@ export default function ProductDetailsPage() {
                     </div>
                   ))}
 
-                
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-medium text-gray-700">Quantity:</span>
+                  <span className="text-sm font-medium text-gray-700">
+                    Quantity:
+                  </span>
                   <div className="border border-gray-300 rounded-full flex items-center justify-between gap-2 w-32 p-0.5">
                     <button
                       onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -239,7 +245,6 @@ export default function ProductDetailsPage() {
                 </button>
               </div>
 
-              
               <div className="lg:col-span-1 space-y-4">
                 <div className="card card-border border-neutral-200 bg-base-100 rounded-5xl">
                   <div className="card-body">
@@ -348,10 +353,9 @@ export default function ProductDetailsPage() {
           </div>
         </div>
 
-        
         <div className="max-w-screen-2xl mx-auto px-4 py-8">
           <DescriptionToggle data={product.description} />
-          <SpecificationToggle data={product}/>
+          <SpecificationToggle data={product} />
         </div>
       </div>
     </>
