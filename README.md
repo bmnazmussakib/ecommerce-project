@@ -185,7 +185,7 @@ Ready to deploy! Push your project to GitHub and:
 - Add your custom domain (optional)
 
 ### 👤 Author
-#### Nazmus Sakib
+#### B M Nazmus Sakib
 ###### Frontend Developer
 
 #### Made with ❤️ using Next.js App Router and Tailwind CSS

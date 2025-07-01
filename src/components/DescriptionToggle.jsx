@@ -20,7 +20,7 @@ const DescriptionToggle = ({ data }) => {
           </div>
         </div>
         
-        {/* Centering the button */}
+
         <div className="flex justify-center">
           <button
             className="mt-3 text-neutral-500 text-lg font-medium capitalize focus:outline-none bg-[linear-gradient(360deg,rgba(255,255,255,1)_0%,rgba(255,255,255,1)_50%,rgba(255,255,255,0)_100%)] px-4 py-2 rounded"

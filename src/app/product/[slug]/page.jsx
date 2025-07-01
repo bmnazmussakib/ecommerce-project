@@ -128,7 +128,7 @@ export default function ProductDetailsPage() {
         <div className="bg-white">
           <div className="max-w-screen-2xl mx-auto px-4 py-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Image Gallery */}
+              
               <div className="lg:col-span-1">
                 <div className="max-w-md aspect-square">
                   <ImageGallery
@@ -153,7 +153,7 @@ export default function ProductDetailsPage() {
                 </div>
               </div>
 
-              {/* Product Info */}
+              
               <div className="lg:col-span-1 space-y-4">
                 <h1 className="text-xl font-semibold text-neutral-900">{product.name}</h1>
 
@@ -183,7 +183,7 @@ export default function ProductDetailsPage() {
                   </span>
                 </div>
 
-                {/* Variant Options */}
+                
                 {product.is_variant &&
                   Object.entries(attributeOptions).map(([attrName, values]) => (
                     <div key={attrName}>
@@ -206,7 +206,7 @@ export default function ProductDetailsPage() {
                     </div>
                   ))}
 
-                {/* Quantity Control */}
+                
                 <div className="flex items-center gap-3">
                   <span className="text-sm font-medium text-gray-700">Quantity:</span>
                   <div className="border border-gray-300 rounded-full flex items-center justify-between gap-2 w-32 p-0.5">
@@ -239,7 +239,7 @@ export default function ProductDetailsPage() {
                 </button>
               </div>
 
-              {/* Seller & Delivery */}
+              
               <div className="lg:col-span-1 space-y-4">
                 <div className="card card-border border-neutral-200 bg-base-100 rounded-5xl">
                   <div className="card-body">
@@ -348,7 +348,7 @@ export default function ProductDetailsPage() {
           </div>
         </div>
 
-        {/* Description & Specs */}
+        
         <div className="max-w-screen-2xl mx-auto px-4 py-8">
           <DescriptionToggle data={product.description} />
           <SpecificationToggle data={product}/>

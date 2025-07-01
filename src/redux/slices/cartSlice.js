@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Helper: Load cart from localStorage
+
 const loadCartFromLocalStorage = () => {
   if (typeof window !== "undefined") {
     try {
@@ -13,12 +13,12 @@ const loadCartFromLocalStorage = () => {
   return [];
 };
 
-// Initial state
+
 const initialState = {
   items: loadCartFromLocalStorage(),
 };
 
-// Helper: Create unique cart item ID
+
 const generateCartItemId = (id, attributes) => {
   if (!attributes) return `${id}`;
   const attrString = Object.entries(attributes)
@@ -28,7 +28,7 @@ const generateCartItemId = (id, attributes) => {
   return `${id}-${attrString}`;
 };
 
-// Helper: Save cart to localStorage
+
 const saveCartToLocalStorage = (items) => {
   if (typeof window !== "undefined") {
     localStorage.setItem("cartItems", JSON.stringify(items));
@@ -54,9 +54,9 @@ const cartSlice = createSlice({
         total_stock_qty,
         merchant,
         promotion,
-        brand, // ✅ Include brand if needed
-        product_detail, // ✅ If you're passing full detail
-        ...rest // ✅ In case there are more fields you didn't list
+        brand, 
+        product_detail, 
+        ...rest 
       } = action.payload;
 
       const cartItemId = generateCartItemId(id, attributes);
@@ -84,7 +84,7 @@ const cartSlice = createSlice({
           promotion,
           brand,
           product_detail,
-          ...rest, // ✅ spread any remaining fields
+          ...rest, 
           cartItemId,
         });
       }
@@ -117,7 +117,6 @@ const cartSlice = createSlice({
       saveCartToLocalStorage([]);
     },
 
-    // Optional: rehydrate manually
     setCart: (state, action) => {
       state.items = action.payload;
       saveCartToLocalStorage(state.items);

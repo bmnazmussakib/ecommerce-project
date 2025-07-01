@@ -132,7 +132,7 @@ export default function CartPage() {
           <div className="md:w-2/3 space-y-6">
             <div className="card border-0 bg-base-100 ">
               <div className="card-body">
-                {/* Select All Checkbox + Buttons */}
+                
                 <div className="flex items-center justify-between gap-4">
                   <h4 className="mb-0 lg:text-3xl text-lg font-semibold">
                     My Cart ({totalQuantity})
@@ -166,7 +166,7 @@ export default function CartPage() {
               </div>
 
               <div className="card-body pt-0 pr-0">
-                {/* Cart Items Grouped by Brand */}
+                
                 <div className="space-y-8">
                   {Object.entries(groupedByBrand).map(([brand, items]) => {
                     const brandKeys = items.map(getCartItemKey);
@@ -176,7 +176,7 @@ export default function CartPage() {
 
                     return (
                       <div key={brand}>
-                        {/* Brand Title with Checkbox */}
+                        
                         <div className="flex items-center mb-4 bg-gray-100 py-2 px-3 ">
                           <input
                             type="checkbox"
@@ -214,7 +214,7 @@ export default function CartPage() {
                           </h3>
                         </div>
 
-                        {/* Items under this brand */}
+                        
                         <div className="space-y-6">
                           {items.map((item) => {
                             const selected = isItemSelected(item);
@@ -327,7 +327,7 @@ export default function CartPage() {
             </div>
           </div>
 
-          {/* Order Summary Panel (unchanged) */}
+          
           <div className="md:w-1/3 space-y-6">
             <div className="card card-border bg-base-100 ">
               <div className="card-body">

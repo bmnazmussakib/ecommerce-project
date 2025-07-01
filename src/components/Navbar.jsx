@@ -14,16 +14,7 @@ import {
 } from "react-icons/ai";
 import { BiSearchAlt } from "react-icons/bi";
 
-// Logo SVG
-const FalconLogo = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 100 50"
-    className="w-8 h-8"
-  >
-    <path d="M0 25L50 0L100 25L50 50Z" fill="#fff" />
-  </svg>
-);
+
 
 export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,7 +23,7 @@ export default function Navbar() {
   const cartItems = useSelector((state) => state.cart.items);
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  // Ensure cart count is only rendered on the client
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -47,16 +38,16 @@ export default function Navbar() {
 
   return (
     <div className="bg-gray-900 text-white w-full z-50">
-      {/* Header */}
+
       <header className="bg-[#0F172A]">
         <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          {/* Logo */}
+
           <Link href="/" className="flex items-center space-x-2">
             <img src="/images/logo.png" alt="" className="max-w-[100px]"/>
             <span className="text-xl font-bold">FALCON</span>
           </Link>
 
-          {/* Search */}
+
           <div className="hidden md:flex flex-grow mx-4 max-w-md">
             <input
               type="text"
@@ -70,7 +61,7 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Icons */}
+
           <div className="flex items-center space-x-4">
             <Link href="/cart" className="relative text-2xl">
               <AiOutlineShoppingCart />
@@ -95,7 +86,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Categories + Nav */}
+
       <nav className="bg-white shadow">
         <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-4 hidden md:flex items-center justify-between text-gray-900">
           <button className="flex items-center">
